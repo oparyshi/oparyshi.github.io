@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oparyshi Linux — Опарыш лучше, чем ты хочешь быть</title>
+<meta name="description" content="Oparyshi Linux — дерзкий минималистичный дистрибутив на чистом Linux, ни на чём не основанный. Релиз 1 января 2027.">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0d12;
+  --bg-soft: #131318;
+  --panel: #181824;
+  --border: #2a2a38;
+  --text: #f8fafc;
+  --muted: #8993a4;
+  --red: #ff3366;
+  --red-deep: #e01b24;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 18px;
+  line-height: 1.6;
+  cursor: none;
+}
+a, button, input { cursor: none; }
+a { color: var(--red); text-decoration: none; }
+a:hover { color: var(--text); }
+
+/* Layout */
+.container { max-width: 1150px; margin: 0 auto; padding: 0 24px; }
+section { padding: 80px 0; border-top: 1px solid var(--border); }
+section:first-of-type { border-top: none; }
+
+/* Header */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,13,18,0.9); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+}
+.logo { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: 2px; }
+.logo img { height: 38px; width: auto; }
+.logo span b { color: var(--red); font-weight: 800; }
+nav { display: flex; gap: 28px; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; }
+nav a { color: var(--muted); }
+nav a:hover { color: var(--red); }
+
+/* Hero */
+.hero { text-align: center; padding: 100px 0 60px; }
+.hero .eyebrow {
+  display: inline-block;
+  color: var(--red); font-size: 13px; letter-spacing: 4px; text-transform: uppercase;
+  border: 1px solid var(--red); padding: 6px 18px; margin-bottom: 28px;
+}
+.hero h1 {
+  font-size: clamp(52px, 10vw, 130px);
+  font-weight: 800; letter-spacing: -2px; line-height: 1;
+  text-transform: uppercase;
+}
+.hero h1 em { font-style: normal; color: var(--red); }
+.hero p.sub {
+  color: var(--muted); font-size: 18px; max-width: 640px; margin: 26px auto 0;
+}
+.hero .logo-big { width: 200px; height: 200px; margin: 40px auto 0; display: block;
+  filter: drop-shadow(0 0 40px rgba(255,51,102,0.25));
+}
+
+/* Countdown */
+.countdown-box {
+  max-width: 1000px; margin: 64px auto 0;
+  border: 1px solid var(--border); background: var(--bg-soft);
+  padding: 48px 24px; position: relative;
+}
+.countdown-box::before {
+  content: 'RELEASE_COUNTDOWN // 2027-01-01T00:00:00';
+  position: absolute; top: -11px; left: 24px;
+  background: var(--bg-soft); color: var(--muted);
+  font-size: 12px; letter-spacing: 2px; padding: 0 10px;
+}
+.countdown-title {
+  text-align: center; font-size: 14px; letter-spacing: 4px;
+  color: var(--muted); text-transform: uppercase; margin-bottom: 28px;
+}
+.countdown-title b { color: var(--red); }
+.countdown-grid {
+  display: flex; align-items: stretch; gap: 10px; flex-wrap: nowrap;
+}
+.cd-cell {
+  border: 1px solid var(--border); background: var(--panel);
+  padding: 22px 6px; text-align: center; position: relative;
+  flex: 1 1 0; min-width: 0;
+}
+.cd-cell .num {
+  font-size: clamp(30px, 5.5vw, 64px); font-weight: 800; line-height: 1;
+  font-variant-numeric: tabular-nums; letter-spacing: -1px;
+}
+.cd-cell .lbl {
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--muted); margin-top: 10px;
+}
+.cd-cell.accent { border-color: var(--red); box-shadow: 0 0 30px rgba(255,51,102,0.15) inset; }
+.cd-cell.accent .num { color: var(--red); }
+.cd-sep { align-self: center; color: var(--red); font-weight: 800; font-size: 30px; flex: 0 0 auto; }
+@media (max-width: 760px) {
+  .countdown-grid { flex-direction: column; align-items: center; }
+  .cd-sep { display: none; }
+  .cd-cell { width: 100%; max-width: 140px; padding: 18px 8px; }
+}
+
+.progress-wrap { margin-top: 34px; }
+.progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); letter-spacing: 1px; margin-bottom: 8px; }
+.progress-bar { height: 10px; border: 1px solid var(--border); background: var(--bg); }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--red-deep), var(--red)); width: 0%; transition: width 0.5s ease; }
+
+/* Features */
+.section-title {
+  text-align: center; font-size: clamp(28px, 5vw, 48px);
+  font-weight: 800; text-transform: uppercase; letter-spacing: -1px; margin-bottom: 12px;
+}
+.section-sub { text-align: center; color: var(--muted); margin-bottom: 48px; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.card {
+  border: 1px solid var(--border); background: var(--bg-soft); padding: 32px 28px;
+  transition: transform .15s ease, border-color .15s ease;
+}
+.card:hover { transform: translateY(-4px); border-color: var(--red); }
+.card .icon { font-size: 28px; margin-bottom: 14px; }
+.card h3 { font-size: 17px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: 14.5px; }
+
+/* Terminal */
+.term {
+  border: 1px solid var(--border); background: #0a0a0f;
+  max-width: 800px; margin: 0 auto;
+}
+.term-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--bg-soft);
+}
+.dot { width: 11px; height: 11px; border-radius: 50%; }
+.dot.r { background: var(--red); } .dot.y { background: #e5c07b; } .dot.g { background: #98c379; }
+.term-head .t { margin-left: 10px; font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+.term-body { padding: 20px 22px; font-size: 14.5px; line-height: 1.9; }
+.term-body .p { color: var(--red); font-weight: 700; }
+.term-body .c { color: var(--muted); }
+.term-body .ok { color: #98c379; }
+.term-body .cursor {
+  display: inline-block; width: 9px; height: 17px; background: var(--red);
+  vertical-align: text-bottom; animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--border); padding: 48px 0;
+  text-align: center; color: var(--muted); font-size: 13px; letter-spacing: 1px;
+}
+footer .logo-mini { height: 30px; vertical-align: -10px; margin-right: 8px; }
+footer a { color: var(--muted); }
+footer a:hover { color: var(--red); }
+footer .-links { margin: 14px 0; }
+footer .links a { margin: 0 14px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container header-inner">
+    <div class="logo">
+      <img src="logo.svg" alt="Oparyshi Linux">
+      <span>OPARYSHI<b>.LINUX</b></span>
+    </div>
+    <nav>
+      <a href="#countdown">Отсчёт</a>
+      <a href="#features">Фичи</a>
+      <a href="#install">Установка</a>
+      <a href="https://t.me/oparyshilinux" target="_blank" rel="noopener">Telegram ↗</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero container">
+  <span class="eyebrow">R E L E A S E &nbsp;&nbsp; 01 . 01 . 2027</span>
+  <h1>MERE OPARYSHI<br><em>OVER EVERYTHING</em></h1>
+  <p class="sub">Дерзкий минималистичный Linux-дистрибутив. Не основан ни на чём — собран с нуля на чистом ядре Linux. Ноль лишнего. Как природа задумала.</p>
+  <img class="logo-big" src="logo.svg" alt="Логотип Oparyshi Linux">
+</section>
+
+<!-- COUNTDOWN -->
+<section class="container" id="countdown">
+  <div class="countdown-box">
+    <div class="countdown-title"><b>Опарыш выходит в релиз</b> · осталось ждать:</div>
+    <div class="countdown-grid">
+      <div class="cd-cell"><div class="num" id="cd-d">000</div><div class="lbl">дней</div></div>
+      <div class="cd-cell inter cd-sep">:</div>
+      <div class="cd-cell accent"><div class="num" id="cd-h">00</div><div class="lbl">часов</div></div>
+      <div class="cd-cell inter cd-sep">:</div>
+      <div class="cd-cell accent"><div class="num" id="cd-m">00</div><div class="lbl">минут</div></div>
+      <div class="cd-cell inter cd-sep">:</div>
+      <div class="cd-cell accent"><div class="num" id="cd-s">00</div><div class="lbl">секунд</div></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>ПУТЬ ДО РЕЛИЗА</span>
+        <span id="cd-pct">00%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="cd-fill"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="container" id="features">
+  <h2 class="section-title">Опарыш лучше, чем <em style="color:var(--red);font-style:normal">ты</em> хочешь быть</h2>
+  <p class="section-sub">// всё уже выбрано за тебя. и выбрано правильно.</p>
+  <div class="grid3">
+    <div class="card">
+      <div class="icon">🪱</div>
+      <h3>Opinionated</h3>
+      <p>Один способ делать вещи. Наш. Ниже — конфиги, выше — только рут. Ты не выбираешь FDE, ты его не выбираешь дважды.</p>
+    </div>
+    <div class="card">
+      <div class="icon">⚡</div>
+      <h3>Vanilla Linux Core</h3>
+      <p>Чистое ядро Linux без наследия и без бейзов. Ничего не унаследовано — всё собрано заново. Хочешь вперёд — `oparysh upd`, хочешь назад — снапшот.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🖥️</div>
+      <h3>5 WM из коробки</h3>
+      <p>Тайловый WM, точки входа, виджеты. Всё настроено так, что бабушка заплачет от умиления — потому что ей уже стало стыдно.</p>
+    </div>
+    <div class="card">
+      <div class="icon">📦</div>
+      <h3>Repro Bootable</h3>
+      <p>Live-ISO, SSD-инсталлер без сюрпризов, готовое рабочее окружение за ~4 минуты. Каждый раз.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🧬</div>
+      <h3>Zero Bloat</h3>
+      <p>То, что не нужно, не ставится. То, что нужно, уже стоит. Всё остальное — синоним мусора, автоматически удалён.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🔥</div>
+      <h3>Neon Anarchy</h3>
+      <p>Тёмная тема, розовый акцент, моноширинный шрифт. Терминал — произведение искусства. Терминал — дома.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section class="container" id="install">
+  <h2 class="section-title">Установка <span style="color:var(--red)">в 2 команды</span></h2>
+  <p class="section-sub">// после релиза 1 января 2027, разумеется</p>
+  <div class="term">
+    <div class="term-head">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="t">user@oparyshi: ~/install</span>
+    </div>
+    <div class="term-body">
+      <div><span class="p">$</span> curl -fsSL https://oparyshi.github.io/install.sh | bash</div>
+      <div><span class="c"># &gt;&gt;&gt; Опарыш внедряется в ваши диски...</span></div>
+      <div class="ok">[ OK ] Подтверждено. Мягкий, пушистый, готов к работе.</div>
+      <div><span class="p">$</span> oparysh status</div>
+      <div><span class="c">&nbsp;release: stable 2027-01-01</span></div>
+      <div><span class="c">packages: 67</span></div>
+      <div><span class="c">&nbsp;&nbsp;status: HALAL</span></div>
+      <div><span class="p">$</span>&nbsp;<span class="cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <img class="logo-mini" src="logo.svg" alt="">
+    <span>OPARYSHI LINUX</span>
+    <div class="links">
+      <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a> · <a href="https://t.me/oparyshilinux" target="_blank" rel="noopener">Telegram</a> · <a href="#">ISO (скоро)</a>
+    </div>
+    <div>© 2025–2027 Oparyshi Linux. Сделано отборным опарышом · powered by чистый Linux, ни на чём не основан</div>
+  </div>
+</footer>
+
+<script>
+// ---- Countdown to release 1 Jan 2027 00:00:00 local time ----
+const RELEASE = new Date(2027, 0, 1, 0, 0, 0, 0);
+// Release calc start point (дата основания проекта)
+const START = new Date(2026, 10, 3, 17, 13, 11);
+
+const el = {
+  d: document.getElementById('cd-d'),
+  h: document.getElementById('cd-h'),
+  m: document.getElementById('cd-m'),
+  s: document.getElementById('cd-s'),
+  pct: document.getElementById('cd-pct'),
+  fill: document.getElementById('cd-fill'),
+};
+function pad(n, w) { return String(n).padStart(w, '0'); }
+
+function tick() {
+  const now = new Date();
+  let diff = RELEASE - now;
+  if (diff < 0) diff = 0;
+  if (RELEASE - now > 0) {
+    const totalSec = Math.floor(diff / 1000);
+    const d = Math.floor(totalSec / 86400);
+    const h = Math.floor((totalSec % 86400) / 3600);
+    const m = Math.floor((totalSec % 3600) / 60);
+    const s = totalSec % 60;
+    el.d.textContent = pad(d, 3);
+    el.h.textContent = pad(h, 2);
+    el.m.textContent = pad(m, 2);
+    el.s.textContent = pad(s, 2);
+    // progress
+    const total = RELEASE - START;
+    const done = now - START;
+    const pct = Math.max(0, Math.min(100, (done / total) * 100));
+    el.pct.textContent = pct.toFixed(7) + '%';
+    el.fill.style.width = pct + '%';
+  } else {
+    el.d.textContent = 'RELE';
+    el.h.textContent = 'ASE';
+    el.m.textContent = 'D!!';
+    el.s.textContent = '🎉';
+    el.pct.textContent = '100%';
+    el.fill.style.width = '100%';
+  }
+}
+tick();
+setInterval(tick, 1000);
+
+// ---- Pixel larva "snake" that crawls after the hidden cursor ----
+(function () {
+  if (window.matchMedia('(pointer: coarse)').matches) return; // no cursor on touch devices
+
+  const cvs = document.createElement('canvas');
+  cvs.id = 'larva-snake';
+  cvs.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9999;';
+  document.body.appendChild(cvs);
+  const ctx = cvs.getContext('2d');
+
+  let W, H;
+  function resize() {
+    W = cvs.width = innerWidth;
+    H = cvs.height = innerHeight;
+  }
+  resize();
+  addEventListener('resize', resize);
+
+  // pixel grid for the blocky look
+  const PX = 5; // one "pixel" of the larva, screen px
+  const N = 22;             // segments count
+  const SPACING = 9;        // distance between segments
+  const SPEED = 10.4;        // head speed, px per frame
+  const TURN = 0.67;        // max turn per frame (radians-ish factor)
+
+  const segs = [];
+  const cx = innerWidth / 2, cy = innerHeight / 2;
+  for (let i = 0; i < N; i++) segs.push({ x: cx - i * SPACING, y: cy, r: 0 });
+
+  let mouse = { x: cx + 200, y: cy + 100 };
+  let lastMove = performance.now();
+  let wanderA = Math.random() * Math.PI * 2;
+  let angle = 0;
+
+  addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; lastMove = performance.now(); });
+
+  // blocky filled circle in grid pixels
+  function blockCircle(x, y, radius) {
+    const rr = radius;
+    const cells = Math.ceil(rr / PX);
+    for (let gy = -cells; gy <= cells; gy++) {
+      for (let gx = -cells; gx <= cells; gx++) {
+        const px = (gx + 0.5) * PX, py = (gy + 0.5) * PX;
+        if (px * px + py * py <= rr * rr) {
+          ctx.fillRect(Math.round(x + px) - PX + (PX % 2), Math.round(y + py) - PX, PX, PX);
+        }
+      }
+    }
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+
+    // idle wandering when cursor is still
+    const idle = performance.now() - lastMove > 2200;
+    const target = idle
+      ? null
+      : mouse;
+
+    if (target) {
+      const want = Math.atan2(target.y - segs[0].y, target.x - segs[0].x);
+      let d = want - angle;
+      while (d > Math.PI) d -= Math.PI * 2;
+      while (d < -Math.PI) d += Math.PI * 2;
+      angle += Math.max(-TURN, Math.min(TURN, d));
+    } else {
+      wanderA += (Math.random() - 0.5) * 0.3;
+      const want = wanderA;
+      let d = want - angle;
+      while (d > Math.PI) d -= Math.PI * 2;
+      while (d < -Math.PI) d += Math.PI * 2;
+      angle += Math.max(-TURN, Math.min(TURN, d));
+    }
+
+    // move head
+    segs[0].x += Math.cos(angle) * SPEED;
+    segs[0].y += Math.sin(angle) * SPEED;
+
+    // bounce off screen edges
+    if (segs[0].x < 0 || segs[0].x > W) { angle = Math.PI - angle; segs[0].x = Math.max(0, Math.min(W, segs[0].x)); }
+    if (segs[0].y < 0 || segs[0].y > H) { angle = -angle; segs[0].y = Math.max(0, Math.min(H, segs[0].y)); }
+
+    // chain constraint: each segment trails the previous one
+    for (let i = 1; i < N; i++) {
+      const a = segs[i - 1], b = segs[i];
+      const dx = a.x - b.x, dy = a.y - b.y;
+      const dist = Math.hypot(dx, dy) || 1;
+      const k = (dist - SPACING) / dist;
+      b.x += dx * k;
+      b.y += dy * k;
+    }
+
+    // draw, tail first so the head lands on top
+    ctx.fillStyle = '#8993a4';
+    for (let i = N - 1; i >= 0; i--) {
+      const s = segs[i];
+      // taper: head fatter, tail thin
+      const rad = PX * (i === 0 ? 7 : i < 4 ? 6 : i < 10 ? 5 : i < 16 ? 4 : 3);
+      blockCircle(s.x, s.y, rad);
+    }
+    // dark segment ridges
+    ctx.fillStyle = '#1e222a';
+    for (let i = 3; i < N; i += 3) blockCircle(segs[i].x, segs[i].y, PX * 2.2);
+
+    // red head spike + eye
+    ctx.fillStyle = '#ff3366';
+    blockCircle(segs[0].x + Math.cos(angle) * 10, segs[0].y + Math.sin(angle) * 10, PX * 2.2);
+    ctx.fillStyle = '#ffffff';
+    blockCircle(segs[0].x, segs[0].y, PX * 1.2);
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+</script>
+
+</body>
+</html>
