@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Oparyshi Linux — Опарыш лучше, чем ты хочешь быть</title>
-<meta name="description" content="Oparyshi Linux — дерзкий минималистичный дистрибутив на чистом Linux, ни на чём не основанный. Релиз 1 января 2027.">
+<meta name="description" content="Oparyshi Linux — дистрибутив на чистом Linux. Source-based сборка — контроль над каждым байтом. Своя независимая пакетная база, пакетник oparysh, софт на Rust и лучше дефолта. Релиз 1 января 2027.">
 <link rel="icon" type="image/svg+xml" href="logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -186,6 +186,7 @@ footer .links a { margin: 0 14px; }
       <a href="#countdown">Отсчёт</a>
       <a href="#features">Фичи</a>
       <a href="#install">Установка</a>
+      <a href="https://github.com/oparyshi/oparysh" target="_blank" rel="noopener">oparysh ↗</a>
       <a href="https://t.me/oparyshilinux" target="_blank" rel="noopener">Telegram ↗</a>
     </nav>
   </div>
@@ -194,7 +195,7 @@ footer .links a { margin: 0 14px; }
 <section class="hero container">
   <span class="eyebrow">R E L E A S E &nbsp;&nbsp; 01 . 01 . 2027</span>
   <h1>MERE OPARYSHI<br><em>OVER EVERYTHING</em></h1>
-  <p class="sub">Дерзкий минималистичный Linux-дистрибутив. Не основан ни на чём — собран с нуля на чистом ядре Linux. Ноль лишнего. Как природа задумала.</p>
+  <p class="sub">Дерзкий минималистичный Linux-дистрибутив. Собран с нуля на чистом ядре Linux. Своя независимая пакетная база, source-based сборка и софт, который мы написали сами — на Rust.</p>
   <img class="logo-big" src="logo.svg" alt="Логотип Oparyshi Linux">
 </section>
 
@@ -232,9 +233,19 @@ footer .links a { margin: 0 14px; }
       <p>Один способ делать вещи. Наш. Ниже — конфиги, выше — только рут. Ты не выбираешь FDE, ты его не выбираешь дважды.</p>
     </div>
     <div class="card">
-      <div class="icon">⚡</div>
-      <h3>Vanilla Linux Core</h3>
-      <p>Чистое ядро Linux без наследия и без бейзов. Ничего не унаследовано — всё собрано заново. Хочешь вперёд — `oparysh upd`, хочешь назад — снапшот.</p>
+      <div class="icon">🦀</div>
+      <h3>Софт покруче</h3>
+      <p>Софт для нас пишется на Rust — либо берём аналоги лучше дефолта: не wpa_supplicant, а iwd. Никаких Legacy-костылей и «поставилось само». Пока другие ставят дефолт — мы ставим лучшее.</p>
+    </div>
+    <div class="card">
+      <div class="icon">📦</div>
+      <h3>Независимая пакетная база</h3>
+      <p>Пакетник <a href="https://github.com/oparyshi/oparysh" target="_blank" rel="noopener" style="color:var(--red)">oparysh</a> — наш собственный инструмент. Своя пакетная база, свои репозитории, ноль чужих зависимостей и чужих решений о твоей системе.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🧬</div>
+      <h3>Source-Based = контроль над каждым байтом</h3>
+      <p>Всё собирается из исходников, а не скачивается чёрным ящиком. Ты видишь каждый флаг компиляции, каждый пакет, каждый байт, который попадает на твой диск. Оптимизировано под твою машину, а не под «среднюю по больнице».</p>
     </div>
     <div class="card">
       <div class="icon">🖥️</div>
@@ -242,12 +253,7 @@ footer .links a { margin: 0 14px; }
       <p>Тайловый WM, точки входа, виджеты. Всё настроено так, что бабушка заплачет от умиления — потому что ей уже стало стыдно.</p>
     </div>
     <div class="card">
-      <div class="icon">📦</div>
-      <h3>Repro Bootable</h3>
-      <p>Live-ISO, SSD-инсталлер без сюрпризов, готовое рабочее окружение за ~4 минуты. Каждый раз.</p>
-    </div>
-    <div class="card">
-      <div class="icon">🧬</div>
+      <div class="icon">🚫</div>
       <h3>Zero Bloat</h3>
       <p>То, что не нужно, не ставится. То, что нужно, уже стоит. Всё остальное — синоним мусора, автоматически удалён.</p>
     </div>
@@ -272,9 +278,12 @@ footer .links a { margin: 0 14px; }
       <div><span class="p">$</span> curl -fsSL https://oparyshi.github.io/install.sh | bash</div>
       <div><span class="c"># &gt;&gt;&gt; Опарыш внедряется в ваши диски...</span></div>
       <div class="ok">[ OK ] Подтверждено. Мягкий, пушистый, готов к работе.</div>
+      <div><span class="p">$</span> oparysh -S iwd</div>
+      <div><span class="c"># &gt;&gt;&gt; wpa_supplicant? не слышали. собираем из сорцов...</span></div>
+      <div class="ok">[ OK ] rustc --opt-level=3. контроль над каждым байтом.</div>
       <div><span class="p">$</span> oparysh status</div>
       <div><span class="c">&nbsp;release: stable 2027-01-01</span></div>
-      <div><span class="c">packages: 67</span></div>
+      <div><span class="c">packages: 67 (source-based, своя пакетная база)</span></div>
       <div><span class="c">&nbsp;&nbsp;status: HALAL</span></div>
       <div><span class="p">$</span>&nbsp;<span class="cursor"></span></div>
     </div>
@@ -286,7 +295,7 @@ footer .links a { margin: 0 14px; }
     <img class="logo-mini" src="logo.svg" alt="">
     <span>OPARYSHI LINUX</span>
     <div class="links">
-      <a href="https://github.com/oparyshi" target="_blank" rel="noopener">GitHub</a> · <a href="https://t.me/oparyshilinux" target="_blank" rel="noopener">Telegram</a> · <a href="#">ISO (скоро)</a>
+      <a href="https://github.com/oparyshi" target="_blank" rel="noopener">GitHub</a> · <a href="https://github.com/oparyshi/oparysh" target="_blank" rel="noopener">Пакетник oparysh</a> · <a href="https://t.me/oparyshilinux" target="_blank" rel="noopener">Telegram</a> · <a href="#">ISO (скоро)</a>
     </div>
     <div>© 2025–2027 Oparyshi Linux. Сделано отборным опарышом · powered by чистый Linux, ни на чём не основан</div>
   </div>
